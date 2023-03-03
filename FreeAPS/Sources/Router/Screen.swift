@@ -26,6 +26,7 @@ enum Screen: Identifiable, Hashable {
     case calibrations
     case notificationsConfig
     case fpuConfig
+    case concentrationConfig
     case snooze
 
     var id: Int { String(reflecting: self).hashValue }
@@ -85,6 +86,8 @@ extension Screen {
             NotificationsConfig.RootView(resolver: resolver)
         case .fpuConfig:
             FPUConfig.RootView(resolver: resolver)
+        case .concentrationConfig:
+            ConcentrationConfig.RootView(resolver: resolver)
         case .snooze:
             Snooze.RootView(resolver: resolver)
         }
