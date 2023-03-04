@@ -21,6 +21,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BasePumpHistoryStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() var settingsManager: SettingsManager!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -33,13 +34,24 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 switch event.type {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
+
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+
+                    var convertedAmount = min(
+                        max(
+                            (amount ?? 0) * self.settingsManager.settings.conversionFactor,
+                            self.settingsManager.preferences.bolusIncrement
+                        ),
+                        self.settingsManager.pumpSettings.maxBolus
+                    )
+                    convertedAmount = Decimal(string: convertedAmount.unitsInDeliverableIncrements.debugDescription) ?? 0
+
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     return [PumpHistoryEvent(
                         id: id,
                         type: .bolus,
                         timestamp: event.date,
-                        amount: amount,
+                        amount: convertedAmount,
                         duration: minutes,
                         durationMin: nil,
                         rate: nil,

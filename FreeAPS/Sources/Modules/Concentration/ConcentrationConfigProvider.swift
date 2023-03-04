@@ -3,9 +3,5 @@ extension ConcentrationConfig {
         func deleteTDDs() {
             // Add code
         }
-
-        func save() {
-            // add code
-        }
     }
 }

@@ -6,6 +6,8 @@ extension BasalProfileEditor {
     final class Provider: BaseProvider, BasalProfileEditorProvider {
         private let processQueue = DispatchQueue(label: "BasalProfileEditorProvider.processQueue")
 
+        var state = StateModel()
+
         var profile: [BasalProfileEntry] {
             storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
                 ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
@@ -25,9 +27,15 @@ extension BasalProfileEditor {
             let syncValues = profile.map {
                 RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
             }
+            let convertedValues = profile.map {
+                RepeatingScheduleValue(
+                    startTime: TimeInterval($0.minutes * 60),
+                    value: Double($0.rate) * Double(state.conversionFactor)
+                )
+            }
 
             return Future { promise in
-                pump.syncBasalRateSchedule(items: syncValues) { result in
+                pump.syncBasalRateSchedule(items: convertedValues) { result in
                     switch result {
                     case .success:
                         self.storage.save(profile, as: OpenAPS.Settings.basalProfile)

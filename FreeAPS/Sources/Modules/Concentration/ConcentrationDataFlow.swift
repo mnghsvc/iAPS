@@ -4,5 +4,4 @@ enum ConcentrationConfig {
 
 protocol ConcentrationConfigProvider {
     func deleteTDDs()
-    func save()
 }

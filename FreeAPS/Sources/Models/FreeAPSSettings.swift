@@ -31,6 +31,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var minuteInterval: Int = 30
     var delay: Int = 60
     var concentration: Int = 100
+    var conversionFactor: Decimal = 1.0
 }
 
 extension FreeAPSSettings: Decodable {
@@ -125,6 +126,10 @@ extension FreeAPSSettings: Decodable {
 
         if let concentration = try? container.decode(Int.self, forKey: .concentration) {
             settings.concentration = concentration
+        }
+
+        if let conversionFactor = try? container.decode(Decimal.self, forKey: .conversionFactor) {
+            settings.conversionFactor = conversionFactor
         }
 
         if let glucoseNotificationsAlways = try? container.decode(Bool.self, forKey: .glucoseNotificationsAlways) {

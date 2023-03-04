@@ -9,9 +9,11 @@ extension DataTable {
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
         var units: GlucoseUnits = .mmolL
+        var convert: Decimal = 1.0
 
         override func subscribe() {
             units = settingsManager.settings.units
+            convert = settingsManager.settings.conversionFactor
             setupTreatments()
             setupGlucose()
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -24,6 +26,7 @@ extension DataTable {
         private func setupTreatments() {
             DispatchQueue.global().async {
                 let units = self.settingsManager.settings.units
+                let convert = self.settingsManager.settings.conversionFactor
 
                 let carbs = self.provider.carbs()
                     .filter { !($0.isFPU ?? false) }
@@ -58,7 +61,13 @@ extension DataTable {
                 let boluses = self.provider.pumpHistory()
                     .filter { $0.type == .bolus }
                     .map {
-                        Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount, idPumpEvent: $0.id)
+                        Treatment(
+                            units: units,
+                            type: .bolus,
+                            date: $0.timestamp,
+                            amount: ($0.amount ?? 0) * convert,
+                            idPumpEvent: $0.id
+                        )
                     }
 
                 let tempBasals = self.provider.pumpHistory()

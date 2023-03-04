@@ -394,7 +394,13 @@ final class BaseAPSManager: APSManager, Injectable {
     func roundBolus(amount: Decimal) -> Decimal {
         guard let pump = pumpManager else { return amount }
         let rounded = Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
-        let maxBolus = Decimal(pump.roundToSupportedBolusVolume(units: Double(settingsManager.pumpSettings.maxBolus)))
+        let maxBolus = Decimal(
+            pump
+                .roundToSupportedBolusVolume(units: Double(
+                    settingsManager.pumpSettings.maxBolus * settingsManager.settings
+                        .conversionFactor
+                ))
+        )
         return min(rounded, maxBolus)
     }
 
@@ -414,10 +420,12 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
+        let convertedRoundedAmount = pump
+            .roundToSupportedBolusVolume(units: amount / Double(settingsManager.settings.conversionFactor))
 
         debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
 
-        pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
+        pump.enactBolus(units: convertedRoundedAmount, automatic: isSMB).sink { completion in
             if case let .failure(error) = completion {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
@@ -474,7 +482,10 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
-        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
+        let convertedRoundedAmount = pump
+            .roundToSupportedBasalRate(unitsPerHour: rate / Double(settingsManager.settings.conversionFactor))
+
+        pump.enactTempBasal(unitsPerHour: convertedRoundedAmount, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
@@ -528,7 +539,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
-            pump.enactBolus(units: roundedAmount, activationType: .manualRecommendationAccepted) { error in
+            let convertedRoundedAmount = pump
+                .roundToSupportedBolusVolume(units: Double(amount / settingsManager.settings.conversionFactor))
+
+            pump.enactBolus(units: convertedRoundedAmount, activationType: .manualRecommendationAccepted) { error in
                 if let error = error {
                     // warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                     switch error {
@@ -594,7 +608,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: Double(rate))
-            pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { error in
+            let convertedRoundedAmount = pump
+                .roundToSupportedBasalRate(unitsPerHour: Double(rate / settingsManager.settings.conversionFactor))
+            pump.enactTempBasal(unitsPerHour: convertedRoundedAmount, for: TimeInterval(duration) * 60) { error in
                 if let error = error {
                     warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 } else {

@@ -5,6 +5,7 @@ extension BasalProfileEditor {
         @Published var syncInProgress = false
         @Published var items: [Item] = []
         @Published var total: Decimal = 0.0
+        @Published var conversionFactor: Decimal = 0
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -16,6 +17,8 @@ extension BasalProfileEditor {
         }
 
         override func subscribe() {
+            subscribeSetting(\.conversionFactor, on: $conversionFactor) { conversionFactor = $0 }
+
             rateValues = provider.supportedBasalRates ?? stride(from: 5.0, to: 1001.0, by: 5.0)
                 .map { ($0.decimal ?? .zero) / 100 }
             items = provider.profile.map { value in

@@ -15,6 +15,13 @@ extension ConcentrationConfig {
             return formatter
         }
 
+        private var conversionFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         private var intFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.allowsFloats = false
@@ -35,7 +42,8 @@ extension ConcentrationConfig {
                     Button {
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                         impactHeavy.impactOccurred()
-                        state.save()
+                        state.concentration = 100
+                        state.conversionFactor = 1.0
                     }
                     label: {
                         Text("Reset to default setting")
@@ -60,7 +68,6 @@ extension ConcentrationConfig {
             .onTapGesture {
                 removeAlert = Alert(
                     title: Text("Do you want to delete all of your TDDs?"),
-                    // message: Text(""),
                     primaryButton: .destructive(Text("Delete"), action: { state.delete() }),
                     secondaryButton: .cancel()
                 )
