@@ -40,6 +40,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var yGridLines: Bool = true
     var oneDimensionalGraph: Bool = false
     var rulerMarks: Bool = false
+    var maxCarbs: Decimal = 1000
+    var displayFatAndProteinOnWatch: Bool = false
+    var onlyAutotuneBasals: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -207,6 +210,18 @@ extension FreeAPSSettings: Decodable {
 
         if let overrideHbA1cUnit = try? container.decode(Bool.self, forKey: .overrideHbA1cUnit) {
             settings.overrideHbA1cUnit = overrideHbA1cUnit
+        }
+
+        if let maxCarbs = try? container.decode(Decimal.self, forKey: .maxCarbs) {
+            settings.maxCarbs = maxCarbs
+        }
+
+        if let displayFatAndProteinOnWatch = try? container.decode(Bool.self, forKey: .displayFatAndProteinOnWatch) {
+            settings.displayFatAndProteinOnWatch = displayFatAndProteinOnWatch
+        }
+
+        if let onlyAutotuneBasals = try? container.decode(Bool.self, forKey: .onlyAutotuneBasals) {
+            settings.onlyAutotuneBasals = onlyAutotuneBasals
         }
 
         self = settings

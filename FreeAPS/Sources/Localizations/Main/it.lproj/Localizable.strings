@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Basale temporanea manuale";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Consenti caricamenti";
 
 /* API secret in NS */
@@ -340,6 +340,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Bolus" = "Bolo massimo";
+
+/* Max setting */
+"Max Carbs" = "Ultimi carboidrati";
 
 /* */
 "Pump Settings" = "Microinfusore";
@@ -452,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Target Basso";
 
-/*  */
-"Target Ranges" = "Intervallo Target";
-
 /* When bolusing */
 "Bolusing" = "Eseguendo bolo";
 
@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Storia";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Esporta glicemia su Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -962,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "Carboidrati";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "Basale temporanea";
 
@@ -1037,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Autosensibilità";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamic Sensitivity";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+
 /* Debug option view Pump History */
 "Pump History" = "Cronologia Micro";
 
@@ -1087,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Dopo aver creato record glicemici nell'app Salute, apri iAPS per aiutarci a trasferire i dati modificati";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,6 +1175,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normale ";
+
+"Currently no Override active" = "Attualmente nessuna regolazione attiva";
 
 /* */
 "Total Insulin Adjustment" = "Regolazione Insulina Totale";
@@ -1278,61 +1292,61 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Attenzione!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTocca 'Aggiungi' per continuare con la quantità selezionata.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "previsione glicemica";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Target Glicemia";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Impostazione percentuale";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Sensibilità insulinica";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(previsione glicemica - Target) / ISF";
 
 /* */
 "Formula:" = "Formula:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "I carboidrati e l'insulina precedenti sono inclusi nella previsione delle glicemie, ma se l'eventuale previsione glicemica è inferiore al target, non sarà consigliato eseguire il bolo.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Nascondi";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "previsione glicemica > target glicemia, ma si prevede che il glucosio scenda prima a ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "che è al di sotto della tua Soglia (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "previsione glicemica > Target glicemia, ma la glicemia sale più lentamente del previsto. ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Salita: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "previsione glicemica > Target Glicemia, ma la glicemia sta diminuendo più velocemente del previsto. Previsto:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". in discesa:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "previsione glicemica > Target Glicemia, ma il glicemia sta cambiando più velocemente del previsto. Previsto:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Modifica:";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = "Aggiungi senza bolo";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1531,7 +1545,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediana";
 
 /* CGM readings in statView */
-"Readings today" = "Letture oggi";
+"Readings" = "Letture";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Letture / 24h";
@@ -1788,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Questo valore predefinito maxCOB posto a 120 e perché questo è il valore più tipico che il nostro corpo è in grado di assorbire in 4 ore. (Se qualcuno mangia più carboidrati; OpenAPS troncherà solo il dosaggio basato su 120. Essenzialmente, questo limita solo AMA come un tappo di sicurezza contro calcoli COB strani a causa di dati erronei.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolo posticipato - Divisore DIA";
